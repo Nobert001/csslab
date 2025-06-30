@@ -1,59 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--head element -->
 <head>
-  <meta charset="UTF-8">
-  <title>Web Developers - ABS Company</title>
-  <link rel="stylesheet" href="csslab.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Elite Car Rentals</title>
+  <style>
+    :root {
+      --primary-bg: #ffffff;
+      --primary-text: #000000;
+      --card-bg: #f4f4f4;
+    }
+
+    body.dark-mode {
+      --primary-bg: #121212;
+      --primary-text: #ffffff;
+      --card-bg: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--primary-bg) url('images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--primary-text);
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: 2px solid white;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    section {
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+      margin: 1rem auto;
+      max-width: 1200px;
+      border-radius: 10px;
+    }
+
+    .dark-mode section {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .car-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .car {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      width: calc(50% - 1rem);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .car img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: green;
+    }
+
+    h2, h3 {
+      margin-top: 2rem;
+    }
+  </style>
 </head>
-
-<!--body element -->
 <body>
+  <header>
+    <h1>Elite Car Rentals</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#booking">Book Now</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  </header>
 
-<!--heading one div -->
-  <div class="header">
-    <h1>Web Developers of ABS Company</h1>
-  </div>
+  <section id="home">
+    <h2>Welcome to Elite Car Rentals</h2>
+    <p>Drive luxury and performance. Explore our top-class fleet now!</p>
+  </section>
 
-<!--div for the flip card;  card for 3D, inner for rotating element-->
-  <div class="lead-container">
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img src="boss.jpg" alt="Lead Developer">
-          <h2>Alex Ray</h2>
-          <p>Lead Developer</p>
-        </div>
-        <div class="flip-card-back">
-          <h2>Alex Ray</h2>
-          <p>10 years of experience in full-stack development. Loves clean code!</p>
-        </div>
+  <!-- Fleet Section with categories -->
+  <section id="fleet" class="fleet">
+    <h2>Our Fleet</h2>
+
+    <!-- Sedans -->
+    <h3>Sedans</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/mercedes-cclass.jpg" alt="Mercedes C-Class" />
+        <h3>Mercedes C-Class</h3>
+        <p>Luxurious German sedan with comfort and efficiency.</p>
+        <p class="price">$90/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/bmw-3series.jpg" alt="BMW 3 Series" />
+        <h3>BMW 3 Series</h3>
+        <p>Premium performance in a stylish package.</p>
+        <p class="price">$100/day</p>
+        <a href="#booking" class="btn">Rent</a>
       </div>
     </div>
-  </div>
 
-<!--div for the team cards; smae class for all of them-->
-  <div class="team">
-    <div class="card">
-      <img src="woman.jpg" alt="Dev 1">
-      <h2>Jane Doe</h2>
-      <p>Frontend Developer</p>
+    <!-- SUVs -->
+    <h3>SUVs</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/maserati-levante.jpg" alt="Maserati Levante" />
+        <h3>Maserati Levante</h3>
+        <p>Italian luxury SUV with sporty DNA.</p>
+        <p class="price">$200/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/vw-touareg.jpg" alt="Volkswagen Touareg" />
+        <h3>Volkswagen Touareg</h3>
+        <p>Comfortable, capable, and refined midsize SUV.</p>
+        <p class="price">$130/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
     </div>
 
-    <div class="card">
-      <img src="man.png" alt="Dev 2">
-      <h2>Sam Lee</h2>
-      <p>Backend Developer</p>
+    <!-- Sports Cars -->
+    <h3>Sports Cars</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/porsche-911.jpg" alt="Porsche 911 Carrera" />
+        <h3>Porsche 911 Carrera</h3>
+        <p>Iconic sports car with thrilling performance.</p>
+        <p class="price">$300/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/lamborghini-huracan.jpg" alt="Lamborghini Huracán" />
+        <h3>Lamborghini Huracán</h3>
+        <p>Exotic supercar with stunning looks and speed.</p>
+        <p class="price">$500/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
     </div>
 
-    <div class="card">
-      <img src="robot.png" alt="Dev 3">
-      <h2>RoboTest</h2>
-      <p>A/B testing</p>
+    <!-- Hatchbacks -->
+    <h3>Hatchbacks</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/vw-golf.jpg" alt="Volkswagen Golf" />
+        <h3>Volkswagen Golf</h3>
+        <p>Compact, practical, and stylish hatchback.</p>
+        <p class="price">$60/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/mini-cooper.jpg" alt="Mini Cooper" />
+        <h3>Mini Cooper</h3>
+        <p>Fun and agile city car with British charm.</p>
+        <p class="price">$70/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
     </div>
 
-   <div style="clear: both;"></div> 
-  </div>
+    <!-- Coupes -->
+    <h3>Coupes</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/audi-tt.jpg" alt="Audi TT Coupe" />
+        <h3>Audi TT Coupe</h3>
+        <p>Sleek 2-door coupe with sporty handling.</p>
+        <p class="price">$120/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/mercedes-eclass-coupe.jpg" alt="Mercedes E-Class Coupe" />
+        <h3>Mercedes E-Class Coupe</h3>
+        <p>Stylish and smooth with premium comfort.</p>
+        <p class="price">$140/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+    </div>
 
+    <!-- Pickup Trucks -->
+    <h3>Pickup Trucks</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/ford-ranger.jpg" alt="Ford Ranger" />
+        <h3>Ford Ranger</h3>
+        <p>Rugged pickup with towing power and style.</p>
+        <p class="price">$110/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/toyota-hilux.jpg" alt="Toyota Hilux" />
+        <h3>Toyota Hilux</h3>
+        <p>Trusted for durability and off-road capability.</p>
+        <p class="price">$115/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+    </div>
+
+    <!-- Vans -->
+    <h3>Vans</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="images/mercedes-sprinter.jpg" alt="Mercedes Sprinter" />
+        <h3>Mercedes Sprinter</h3>
+        <p>Spacious van perfect for group or cargo transport.</p>
+        <p class="price">$160/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+      <div class="car">
+        <img src="images/ford-transit.jpg" alt="Ford Transit" />
+        <h3>Ford Transit</h3>
+        <p>Versatile and roomy van for travel or business.</p>
+        <p class="price">$150/day</p>
+        <a href="#booking" class="btn">Rent</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking">
+    <h2>Book Your Ride</h2>
+    <p>Fill in your details and select your preferred vehicle.</p>
+    <!-- Add form fields here -->
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Phone: +123 456 7890<br>Email: info@elitecars.com</p>
+  </section>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
 </body>
 </html>
