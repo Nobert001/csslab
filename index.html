@@ -9,12 +9,26 @@
       --primary-bg: #ffffff;
       --primary-text: #000000;
       --card-bg: #f4f4f4;
+      --accent: #007bff; /* Default Blue */
     }
 
     body.dark-mode {
       --primary-bg: #121212;
       --primary-text: #ffffff;
       --card-bg: #1e1e1e;
+    }
+
+    body.theme-white { /* New White Theme */
+      --accent: #ffffff; /* White accent for buttons etc. */
+      --primary-text: #000000; /* Ensure text is visible on white accent */
+    }
+
+    body.theme-green {
+      --accent: #2a9d8f;
+    }
+
+    body.theme-blue { /* New Blue Theme */
+      --accent: #007bff; /* Original Blue accent */
     }
 
     body {
@@ -70,39 +84,98 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
+      justify-content: center; /* Center cards if they don't fill a row */
     }
 
     .car {
       background: var(--card-bg);
       padding: 1rem;
       border-radius: 10px;
-      width: calc(50% - 1rem);
+      width: calc(33% - 1rem); /* Changed to 3 cars per row for better display of many items */
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      text-align: center;
     }
 
     .car img {
       width: 100%;
+      height: 150px; /* Fixed height for images */
+      object-fit: cover; /* Cover the area, cropping if necessary */
       border-radius: 10px;
+      margin-bottom: 0.5rem;
     }
 
     .btn {
       display: inline-block;
       margin-top: 0.5rem;
       padding: 0.5rem 1rem;
-      background: #007bff;
-      color: white;
+      background: var(--accent);
+      color: white; /* Default button text color */
       text-decoration: none;
       border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    /* Ensure text color is black for the new white theme button */
+    body.theme-white .btn {
+      color: var(--primary-text); /* Uses primary-text, which is black in white theme */
+    }
+
+
+    .btn:hover {
+        opacity: 0.9;
     }
 
     .price {
       font-weight: bold;
       color: green;
+      margin-top: 0.5rem;
+      display: block;
     }
 
     h2, h3 {
       margin-top: 2rem;
+      color: var(--primary-text);
     }
+
+    /* Clock Widget Styles */
+    .clock-widget {
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    .clock-widget .clock {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .clock-widget select,
+    .clock-widget .theme-buttons button {
+      margin-top: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .theme-buttons {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .theme-buttons button {
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(255,255,255,0.5) !important; /* Ensure border visibility */
+    }
+
+    .theme-white-button { background: #ffffff; border: 1px solid #ccc !important; } /* Specific button style for white */
+    .theme-green { background: #2a9d8f; }
+    .theme-blue-button { background: #007bff; } /* Specific button style for blue */
+
   </style>
 </head>
 <body>
@@ -115,168 +188,631 @@
       <a href="#contact">Contact</a>
     </nav>
     <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <div class="clock-widget">
+      <div class="clock" id="clock">--:--:--</div>
+      <select id="timezone"></select>
+      <div class="theme-buttons">
+        <button class="theme-white-button" onclick="setTheme('white')"></button>
+        <button class="theme-green" onclick="setTheme('green')"></button>
+        <button class="theme-blue-button" onclick="setTheme('blue')"></button>
+      </div>
+    </div>
   </header>
 
   <section id="home">
     <h2>Welcome to Elite Car Rentals</h2>
     <p>Drive luxury and performance. Explore our top-class fleet now!</p>
-  </section>
+    </section>
 
-  <!-- Fleet Section with categories -->
   <section id="fleet" class="fleet">
     <h2>Our Fleet</h2>
 
-    <!-- Sedans -->
-    <h3>Sedans</h3>
-    <div class="car-container">
-      <div class="car">
-        <img src="images/mercedes-cclass.jpg" alt="Mercedes C-Class" />
-        <h3>Mercedes C-Class</h3>
-        <p>Luxurious German sedan with comfort and efficiency.</p>
-        <p class="price">$90/day</p>
-        <a href="#booking" class="btn">Rent</a>
-      </div>
-      <div class="car">
-        <img src="images/bmw-3series.jpg" alt="BMW 3 Series" />
-        <h3>BMW 3 Series</h3>
-        <p>Premium performance in a stylish package.</p>
-        <p class="price">$100/day</p>
-        <a href="#booking" class="btn">Rent</a>
-      </div>
-    </div>
-
-    <!-- SUVs -->
     <h3>SUVs</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/maserati-levante.jpg" alt="Maserati Levante" />
-        <h3>Maserati Levante</h3>
-        <p>Italian luxury SUV with sporty DNA.</p>
-        <p class="price">$200/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+GLE" alt="Mercedes-Benz GLE">
+        <h3>Mercedes-Benz GLE</h3>
+        <p>Luxury and power combined.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/vw-touareg.jpg" alt="Volkswagen Touareg" />
-        <h3>Volkswagen Touareg</h3>
-        <p>Comfortable, capable, and refined midsize SUV.</p>
-        <p class="price">$130/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+X5" alt="BMW X5">
+        <h3>BMW X5</h3>
+        <p>Sporty design, robust performance.</p>
+        <span class="price">$140/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+Q5" alt="Audi Q5">
+        <h3>Audi Q5</h3>
+        <p>Sophisticated style, advanced tech.</p>
+        <span class="price">$135/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Macan" alt="Porsche Macan">
+        <h3>Porsche Macan</h3>
+        <p>Unmatched performance in an SUV.</p>
+        <span class="price">$200/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+Levante" alt="Maserati Levante">
+        <h3>Maserati Levante</h3>
+        <p>Exotic elegance, thrilling drive.</p>
+        <span class="price">$180/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Explorer" alt="Ford Explorer">
+        <h3>Ford Explorer</h3>
+        <p>Reliable and spacious for families.</p>
+        <span class="price">$90/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+Concept+SUV" alt="Ram Concept SUV">
+        <h3>Ram Concept SUV</h3>
+        <p>Bold presence, commanding power.</p>
+        <span class="price">$110/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Urus" alt="Lamborghini Urus">
+        <h3>Lamborghini Urus</h3>
+        <p>Supercar performance, SUV versatility.</p>
+        <span class="price">$350/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Model+Y" alt="Tesla Model Y">
+        <h3>Tesla Model Y</h3>
+        <p>Electric future, exhilarating speed.</p>
+        <span class="price">$160/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
 
-    <!-- Sports Cars -->
-    <h3>Sports Cars</h3>
+    <h3>Sedans</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/porsche-911.jpg" alt="Porsche 911 Carrera" />
-        <h3>Porsche 911 Carrera</h3>
-        <p>Iconic sports car with thrilling performance.</p>
-        <p class="price">$300/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+C-Class" alt="Mercedes-Benz C-Class Sedan">
+        <h3>Mercedes-Benz C-Class Sedan</h3>
+        <p>Ultimate comfort and prestige.</p>
+        <span class="price">$120/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/lamborghini-huracan.jpg" alt="Lamborghini Huracán" />
-        <h3>Lamborghini Huracán</h3>
-        <p>Exotic supercar with stunning looks and speed.</p>
-        <p class="price">$500/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+3+Series" alt="BMW 3 Series Sedan">
+        <h3>BMW 3 Series Sedan</h3>
+        <p>Dynamic driving, elegant design.</p>
+        <span class="price">$115/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+A4" alt="Audi A4 Sedan">
+        <h3>Audi A4</h3>
+        <p>Refined interior, smooth ride.</p>
+        <span class="price">$110/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Panamera" alt="Porsche Panamera Sedan">
+        <h3>Porsche Panamera</h3>
+        <p>Sports car soul, sedan practicality.</p>
+        <span class="price">$220/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+Ghibli" alt="Maserati Ghibli Sedan">
+        <h3>Maserati Ghibli</h3>
+        <p>Italian flair, powerful engine.</p>
+        <span class="price">$190/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Fusion" alt="Ford Fusion Sedan">
+        <h3>Ford Fusion</h3>
+        <p>Economical and reliable daily drive.</p>
+        <span class="price">$70/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+Concept+Sedan" alt="Ram Concept Sedan">
+        <h3>Ram Concept Sedan</h3>
+        <p>Spacious comfort, bold styling.</p>
+        <span class="price">$95/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Estoque+Concept" alt="Lamborghini Estoque Concept Sedan">
+        <h3>Lamborghini Estoque Concept Sedan</h3>
+        <p>Exotic, rare four-door concept.</p>
+        <span class="price">$400/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Model+3" alt="Tesla Model 3 Sedan">
+        <h3>Tesla Model 3</h3>
+        <p>Innovative electric, instant torque.</p>
+        <span class="price">$130/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
 
-    <!-- Hatchbacks -->
     <h3>Hatchbacks</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/vw-golf.jpg" alt="Volkswagen Golf" />
-        <h3>Volkswagen Golf</h3>
-        <p>Compact, practical, and stylish hatchback.</p>
-        <p class="price">$60/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+A-Class+Hatch" alt="Mercedes-Benz A-Class Hatchback">
+        <h3>Mercedes-Benz A-Class Hatchback</h3>
+        <p>Compact luxury, urban agile.</p>
+        <span class="price">$100/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/mini-cooper.jpg" alt="Mini Cooper" />
-        <h3>Mini Cooper</h3>
-        <p>Fun and agile city car with British charm.</p>
-        <p class="price">$70/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+1+Series+Hatch" alt="BMW 1 Series Hatchback">
+        <h3>BMW 1 Series Hatchback</h3>
+        <p>Sporty and versatile city car.</p>
+        <span class="price">$95/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+A3+Sportback" alt="Audi A3 Sportback">
+        <h3>Audi A3 Sportback</h3>
+        <p>Premium feel, practical space.</p>
+        <span class="price">$90/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Luxury+Hatchback" alt="Porsche Luxury Hatchback">
+        <h3>Porsche Luxury Hatchback</h3>
+        <p>Performance-oriented compact.</p>
+        <span class="price">$180/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+Luxury+Hatchback" alt="Maserati Luxury Hatchback">
+        <h3>Maserati Luxury Hatchback</h3>
+        <p>Unique luxury in a compact form.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Focus+Hatchback" alt="Ford Focus Hatchback">
+        <h3>Ford Focus Hatchback</h3>
+        <p>Fuel-efficient and easy to park.</p>
+        <span class="price">$60/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+Concept+Hatchback" alt="Ram Concept Hatchback">
+        <h3>Ram Concept Hatchback</h3>
+        <p>Compact, surprising utility.</p>
+        <span class="price">$80/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Concept+Hatchback" alt="Lamborghini Concept Hatchback">
+        <h3>Lamborghini Concept Hatchback</h3>
+        <p>Unrealized concept, pure fantasy.</p>
+        <span class="price">$300/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Model+Y+(Crossover-Hatch)" alt="Tesla Model Y (Crossover-Hatch)">
+        <h3>Tesla Model Y (Crossover-Hatch)</h3>
+        <p>Electric efficiency, compact design.</p>
+        <span class="price">$110/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
 
-    <!-- Coupes -->
     <h3>Coupes</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/audi-tt.jpg" alt="Audi TT Coupe" />
-        <h3>Audi TT Coupe</h3>
-        <p>Sleek 2-door coupe with sporty handling.</p>
-        <p class="price">$120/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+E-Class+Coupe" alt="Mercedes-Benz E-Class Coupe">
+        <h3>Mercedes-Benz E-Class Coupe</h3>
+        <p>Sleek design, luxurious cabin.</p>
+        <span class="price">$160/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/mercedes-eclass-coupe.jpg" alt="Mercedes E-Class Coupe" />
-        <h3>Mercedes E-Class Coupe</h3>
-        <p>Stylish and smooth with premium comfort.</p>
-        <p class="price">$140/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+4+Series+Coupe" alt="BMW 4 Series Coupe">
+        <h3>BMW 4 Series Coupe</h3>
+        <p>Pure driving pleasure, iconic style.</p>
+        <span class="price">$155/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+A5+Coupe" alt="Audi A5 Coupe">
+        <h3>Audi A5 Coupe</h3>
+        <p>Cutting-edge tech, elegant lines.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+911+Carrera" alt="Porsche 911 Carrera">
+        <h3>Porsche 911 Carrera</h3>
+        <p>Legendary sports car heritage.</p>
+        <span class="price">$250/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+GranTurismo" alt="Maserati GranTurismo">
+        <h3>Maserati GranTurismo</h3>
+        <p>Timeless beauty, roaring performance.</p>
+        <span class="price">$210/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Mustang" alt="Ford Mustang Coupe">
+        <h3>Ford Mustang</h3>
+        <p>Classic American muscle.</p>
+        <span class="price">$100/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+Concept+Coupe" alt="Ram Concept Coupe">
+        <h3>Ram Concept Coupe</h3>
+        <p>Unconventional, powerful statement.</p>
+        <span class="price">$120/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Huracan" alt="Lamborghini Huracán">
+        <h3>Lamborghini Huracán</h3>
+        <p>Iconic, extreme, breathtaking speed.</p>
+        <span class="price">$500/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Roadster" alt="Tesla Roadster Coupe">
+        <h3>Tesla Roadster</h3>
+        <p>Electric performance, futuristic.</p>
+        <span class="price">$170/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
 
-    <!-- Pickup Trucks -->
-    <h3>Pickup Trucks</h3>
+    <h3>Sports Cars</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/ford-ranger.jpg" alt="Ford Ranger" />
-        <h3>Ford Ranger</h3>
-        <p>Rugged pickup with towing power and style.</p>
-        <p class="price">$110/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-AMG+GT" alt="Mercedes-AMG GT Sports Car">
+        <h3>Mercedes-AMG GT</h3>
+        <p>Performance and luxury merged.</p>
+        <span class="price">$250/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/toyota-hilux.jpg" alt="Toyota Hilux" />
-        <h3>Toyota Hilux</h3>
-        <p>Trusted for durability and off-road capability.</p>
-        <p class="price">$115/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+M4" alt="BMW M4 Sports Car">
+        <h3>BMW M4</h3>
+        <p>Precision engineering, thrilling drive.</p>
+        <span class="price">$230/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+R8" alt="Audi R8 Sports Car">
+        <h3>Audi R8</h3>
+        <p>Sleek design, track-ready performance.</p>
+        <span class="price">$240/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+718+Cayman" alt="Porsche 718 Cayman Sports Car">
+        <h3>Porsche 718 Cayman</h3>
+        <p>The ultimate driving machine.</p>
+        <span class="price">$300/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+MC20" alt="Maserati MC20 Sports Car">
+        <h3>Maserati MC20</h3>
+        <p>Passionate performance, Italian soul.</p>
+        <span class="price">$280/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Mustang+GT" alt="Ford Mustang GT Sports Car">
+        <h3>Ford Mustang GT</h3>
+        <p>American muscle, raw power.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+Concept+Sports+Car" alt="Ram Concept Sports Car">
+        <h3>Ram Concept Sports Car</h3>
+        <p>A surprising and powerful concept.</p>
+        <span class="price">$180/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Revuelto" alt="Lamborghini Revuelto Sports Car">
+        <h3>Lamborghini Revuelto</h3>
+        <p>Extreme and iconic supercar.</p>
+        <span class="price">$600/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Model+S+Plaid" alt="Tesla Model S Plaid Sports Car">
+        <h3>Tesla Model S Plaid</h3>
+        <p>Electric performance revolution.</p>
+        <span class="price">$200/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
 
-    <!-- Vans -->
     <h3>Vans</h3>
     <div class="car-container">
       <div class="car">
-        <img src="images/mercedes-sprinter.jpg" alt="Mercedes Sprinter" />
-        <h3>Mercedes Sprinter</h3>
-        <p>Spacious van perfect for group or cargo transport.</p>
-        <p class="price">$160/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+Sprinter" alt="Mercedes-Benz Sprinter Van">
+        <h3>Mercedes-Benz Sprinter</h3>
+        <p>Spacious, comfortable, and reliable.</p>
+        <span class="price">$130/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
       <div class="car">
-        <img src="images/ford-transit.jpg" alt="Ford Transit" />
-        <h3>Ford Transit</h3>
-        <p>Versatile and roomy van for travel or business.</p>
-        <p class="price">$150/day</p>
-        <a href="#booking" class="btn">Rent</a>
+        <img src="https://via.placeholder.com/300x150?text=BMW+Luxury+Van" alt="BMW Luxury Van">
+        <h3>BMW Luxury Van</h3>
+        <p>Premium passenger transport.</p>
+        <span class="price">$125/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+Luxury+Van" alt="Audi Luxury Van">
+        <h3>Audi Luxury Van</h3>
+        <p>Luxury and utility for groups.</p>
+        <span class="price">$120/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Luxury+Van" alt="Porsche Luxury Van">
+        <h3>Porsche Luxury Van</h3>
+        <p>High-performance family hauler.</p>
+        <span class="price">$200/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+Luxury+Van" alt="Maserati Luxury Van">
+        <h3>Maserati Luxury Van</h3>
+        <p>Exotic, spacious, and unique.</p>
+        <span class="price">$180/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Transit+Connect" alt="Ford Transit Connect Van">
+        <h3>Ford Transit Connect</h3>
+        <p>Versatile for cargo or passengers.</p>
+        <span class="price">$90/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+ProMaster" alt="Ram ProMaster Van">
+        <h3>Ram ProMaster</h3>
+        <p>Robust and ready for work or travel.</p>
+        <span class="price">$100/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Concept+Van" alt="Lamborghini Concept Van">
+        <h3>Lamborghini Concept Van</h3>
+        <p>Fantasy vehicle for ultimate groups.</p>
+        <span class="price">$400/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Cybertruck+(Utility+Van)" alt="Tesla Cybertruck (Utility Van)">
+        <h3>Tesla Cybertruck (Utility Van)</h3>
+        <p>Electric, silent, and efficient.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
       </div>
     </div>
+
+    <h3>Pickup Trucks</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+Luxury+Pickup" alt="Mercedes-Benz Luxury Pickup Truck">
+        <h3>Mercedes-Benz Luxury Pickup</h3>
+        <p>Luxury in a utility vehicle.</p>
+        <span class="price">$140/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=BMW+Luxury+Pickup+Concept" alt="BMW Luxury Pickup Truck Concept">
+        <h3>BMW Luxury Pickup Concept</h3>
+        <p>Sporty utility, high-end features.</p>
+        <span class="price">$135/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+Luxury+Pickup+Concept" alt="Audi Luxury Pickup Truck Concept">
+        <h3>Audi Luxury Pickup Concept</h3>
+        <p>Premium capability, refined.</p>
+        <span class="price">$130/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Luxury+Pickup+Concept" alt="Porsche Luxury Pickup Truck Concept">
+        <h3>Porsche Luxury Pickup Concept</h3>
+        <p>Performance-driven utility.</p>
+        <span class="price">$220/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+Luxury+Pickup+Concept" alt="Maserati Luxury Pickup Truck Concept">
+        <h3>Maserati Luxury Pickup Concept</h3>
+        <p>Distinctive luxury workhorse.</p>
+        <span class="price">$200/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+F-150" alt="Ford F-150 Pickup Truck">
+        <h3>Ford F-150</h3>
+        <p>America's favorite, built tough.</p>
+        <span class="price">$100/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+1500" alt="Ram 1500 Pickup Truck">
+        <h3>Ram 1500</h3>
+        <p>Powerful and capable for any task.</p>
+        <span class="price">$110/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Concept+Pickup" alt="Lamborghini Concept Pickup Truck">
+        <h3>Lamborghini Concept Pickup</h3>
+        <p>The ultimate performance truck fantasy.</p>
+        <span class="price">$450/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Cybertruck" alt="Tesla Cybertruck">
+        <h3>Tesla Cybertruck</h3>
+        <p>Futuristic electric utility.</p>
+        <span class="price">$170/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+    </div>
+
+    <h3>Electric Cars</h3>
+    <div class="car-container">
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Mercedes-Benz+EQE" alt="Mercedes-Benz EQE Electric Car">
+        <h3>Mercedes-Benz EQE</h3>
+        <p>Silent luxury, powerful EV.</p>
+        <span class="price">$170/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=BMW+i4" alt="BMW i4 Electric Car">
+        <h3>BMW i4</h3>
+        <p>Innovative e-drive, classic BMW feel.</p>
+        <span class="price">$165/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Audi+e-tron+GT" alt="Audi e-tron GT Electric Car">
+        <h3>Audi e-tron GT</h3>
+        <p>Sleek design, cutting-edge EV tech.</p>
+        <span class="price">$160/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Porsche+Taycan" alt="Porsche Taycan Electric Car">
+        <h3>Porsche Taycan</h3>
+        <p>Electric sports car performance.</p>
+        <span class="price">$280/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Maserati+GranTurismo+Folgore" alt="Maserati GranTurismo Folgore Electric Car">
+        <h3>Maserati GranTurismo Folgore</h3>
+        <p>Italian electric luxury and power.</p>
+        <span class="price">$250/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ford+Mustang+Mach-E" alt="Ford Mustang Mach-E Electric Car">
+        <h3>Ford Mustang Mach-E</h3>
+        <p>Practical and powerful EV options.</p>
+        <span class="price">$120/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Ram+1500+REV" alt="Ram 1500 REV Electric Pickup">
+        <h3>Ram 1500 REV</h3>
+        <p>Electric utility with Ram power.</p>
+        <span class="price">$140/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Lamborghini+Lanzador+Concept" alt="Lamborghini Lanzador Concept Electric Car">
+        <h3>Lamborghini Lanzador Concept</h3>
+        <p>Future electric supercar concept.</p>
+        <span class="price">$650/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+      <div class="car">
+        <img src="https://via.placeholder.com/300x150?text=Tesla+Model+S" alt="Tesla Model S Electric Car">
+        <h3>Tesla Model S</h3>
+        <p>Leading the electric revolution.</p>
+        <span class="price">$150/day</span>
+        <a href="#" class="btn">Rent Now</a>
+      </div>
+    </div>
+
   </section>
 
-  <!-- Booking Section -->
   <section id="booking">
     <h2>Book Your Ride</h2>
     <p>Fill in your details and select your preferred vehicle.</p>
-    <!-- Add form fields here -->
-  </section>
+    </section>
 
-  <!-- Contact Section -->
   <section id="contact">
     <h2>Contact Us</h2>
     <p>Phone: +123 456 7890<br>Email: info@elitecars.com</p>
   </section>
 
   <script>
+    // Clock + Timezone
+    const timezoneEl = document.getElementById("timezone");
+    const clockEl = document.getElementById("clock");
+
+    if (timezoneEl && clockEl) {
+      const timezones = Intl.supportedValuesOf("timeZone");
+      timezones.forEach(tz => {
+        const option = document.createElement("option");
+        option.value = tz;
+        option.textContent = tz;
+        timezoneEl.appendChild(option);
+      });
+
+      const savedZone = localStorage.getItem("timezone");
+      if (savedZone) timezoneEl.value = savedZone;
+
+      timezoneEl.addEventListener("change", () => {
+        localStorage.setItem("timezone", timezoneEl.value);
+      });
+
+      function updateClock() {
+        const zone = timezoneEl.value || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const now = new Date().toLocaleTimeString("en-US", {
+          timeZone: zone,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        clockEl.textContent = now;
+      }
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    }
+
+    // Theme toggling
     function toggleTheme() {
       document.body.classList.toggle("dark-mode");
+      localStorage.setItem("mode", document.body.classList.contains("dark-mode") ? "dark" : "light");
     }
+
+    function setTheme(theme) {
+      document.body.classList.remove("theme-white", "theme-green", "theme-blue"); // Update removed classes
+      document.body.classList.add("theme-" + theme);
+      localStorage.setItem("theme", theme);
+    }
+
+    window.onload = () => {
+      if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.body.classList.add("theme-" + savedTheme);
+      }
+    };
   </script>
 </body>
 </html>
